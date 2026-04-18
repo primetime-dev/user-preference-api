@@ -15,7 +15,10 @@ class UserPreferenceApiTests(unittest.TestCase):
         response = client.get("/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json(), {"message": "hello world"})
+        self.assertEqual(
+            response.get_json(),
+            {"message": "hello world from user-preference-api"},
+        )
 
     def test_health_returns_ok(self) -> None:
         """The service exposes a basic health endpoint."""

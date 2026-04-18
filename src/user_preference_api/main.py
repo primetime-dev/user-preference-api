@@ -9,7 +9,7 @@ def create_app() -> Flask:
 
     @app.get("/")
     def index() -> tuple[object, int]:
-        return jsonify({"message": "hello world"}), 200
+        return jsonify({"message": "hello world from user-preference-api"}), 200
 
     @app.get("/health")
     def health() -> tuple[object, int]:

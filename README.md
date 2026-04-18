@@ -12,6 +12,36 @@ Legacy-style service with its own local CI definition.
   - `kubectl apply --namespace legacy-services -f k8s/deployment.yaml`
   - `kubectl apply --namespace legacy-services -f k8s/service.yaml`
 
+## Quick Start
+
+Start the service directly:
+
+```bash
+pipenv install --dev
+PYTHONPATH=src pipenv run python -m user_preference_api.main
+```
+
+In another terminal, verify it is serving traffic:
+
+```bash
+curl http://127.0.0.1:8001/
+curl http://127.0.0.1:8001/health
+```
+
+Build and run the container:
+
+```bash
+docker build -t user-preference-api:dev .
+docker run --rm -p 8001:8001 user-preference-api:dev
+```
+
+Then verify the containerized service:
+
+```bash
+curl http://127.0.0.1:8001/
+curl http://127.0.0.1:8001/health
+```
+
 ## Endpoints
 
 - `GET /`
