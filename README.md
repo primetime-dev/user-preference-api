@@ -5,7 +5,7 @@ Legacy-style service with its own local CI definition.
 ## Local Commands
 
 - Install dependencies: `pipenv install --dev`
-- Run tests: `PYTHONPATH=src pipenv run nosetests tests/test_app.py -v`
+- Run tests: `PYTHONPATH=src pipenv run python -m unittest -v tests/test_app.py`
 - Start the API: `PYTHONPATH=src pipenv run python -m user_preference_api.main`
 - Build the image: `docker build -t user-preference-api:dev .`
 - Apply manifests individually:
@@ -50,7 +50,7 @@ curl http://127.0.0.1:8001/health
 ## Pipeline
 
 This repo keeps a local CI workflow instead of consuming the shared golden path.
-It uses Pipenv, nose, and a differently shaped deploy job.
+It uses Pipenv, the standard library test runner, and a differently shaped deploy job.
 Pushes to `main` build and publish `ghcr.io/primetime-dev/user-preference-api:${GITHUB_SHA}`,
 rewrite the Deployment manifest to that immutable tag inside the release workflow, and apply
 the patched manifests to Kubernetes.

@@ -31,8 +31,8 @@ jobs:
       - name: Confirm Flask import
         run: PIPENV_VENV_IN_PROJECT=1 pipenv run python -c "import flask; print(flask.__version__)"
 
-      - name: Run nose regression suite
-        run: PYTHONPATH=src PIPENV_VENV_IN_PROJECT=1 pipenv run nosetests tests/test_app.py -v
+      - name: Run unittest regression suite
+        run: PYTHONPATH=src PIPENV_VENV_IN_PROJECT=1 pipenv run python -m unittest -v tests/test_app.py
 
   image-smoke:
     runs-on: ubuntu-latest

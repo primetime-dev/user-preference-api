@@ -6,8 +6,5 @@ name = "pypi"
 [packages]
 flask = "*"
 
-[dev-packages]
-nose = "==1.3.7"
-
 [requires]
 python_version = "3.13"
