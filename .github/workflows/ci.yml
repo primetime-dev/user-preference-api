@@ -1,0 +1,45 @@
+name: Legacy CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Use Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install Pipenv
+        run: pip install pipenv==2024.4.1
+
+      - name: Sync repo dependencies
+        run: PIPENV_VENV_IN_PROJECT=1 pipenv install --dev
+
+      - name: Print dependency tree
+        run: pipenv graph
+
+      - name: Confirm Flask import
+        run: PIPENV_VENV_IN_PROJECT=1 pipenv run python -c "import flask; print(flask.__version__)"
+
+      - name: Run nose regression suite
+        run: PYTHONPATH=src PIPENV_VENV_IN_PROJECT=1 pipenv run nosetests tests/test_app.py -v
+
+  image-smoke:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build local image smoke check
+        run: docker build -t user-preference-api:ci .

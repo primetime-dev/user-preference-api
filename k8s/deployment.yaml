@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-preference-api
+  namespace: legacy-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-preference-api
+  template:
+    metadata:
+      labels:
+        app: user-preference-api
+    spec:
+      containers:
+        - name: user-preference-api
+          image: ghcr.io/primetime-dev/user-preference-api:latest
+          ports:
+            - containerPort: 8001

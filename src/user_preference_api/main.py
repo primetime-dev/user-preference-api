@@ -1,0 +1,30 @@
+"""Runnable user preference service backed by Flask."""
+
+from flask import Flask, jsonify
+
+
+def create_app() -> Flask:
+    """Create the Flask application."""
+    app = Flask(__name__)
+
+    @app.get("/")
+    def index() -> tuple[object, int]:
+        return jsonify({"message": "hello world"}), 200
+
+    @app.get("/health")
+    def health() -> tuple[object, int]:
+        return jsonify({"service": "user-preference-api", "status": "ok"}), 200
+
+    return app
+
+
+app = create_app()
+
+
+def run() -> None:
+    """Run the development server."""
+    app.run(host="0.0.0.0", port=8001)
+
+
+if __name__ == "__main__":
+    run()
